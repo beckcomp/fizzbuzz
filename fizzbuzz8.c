@@ -9,23 +9,21 @@ int main()
         fprintf(f, "#include <stdio.h>\n\n");
         fprintf(f, "int main(void)\n{\n");
         for (int i = 1; i <= 100; i++) {
-            if (!(i%15)) {
-                fprintf(f, "\tprintf(\"FizzBuzz\\n\");\n");
-            } else if (!(i%3)) {
-                fprintf(f, "\tprintf(\"Fizz\\n\");\n");
-            } else if (!(i%5)) {
-                fprintf(f, "\tprintf(\"Buzz\\n\");\n");
-            } else {
-                fprintf(f, "\tprintf(\"%d\\n\");\n", i);
-            }
+            int fb = 0;
+            fprintf(f, "\tprintf(\"");
+            if (!(i%3)) { fprintf(f, "Fizz"); fb++; }
+            if (!(i%5)) { fprintf(f, "Buzz"); fb++; }
+            if (!fb)    { fprintf(f, "%d", i);      }
+            fprintf(f, "\\n\");\n");
         }
         fprintf(f, "\treturn 0;\n}");
         fclose(f);
 
+        system("gcc fizzbuzz9.c -o b.exe");
 #ifdef __linux__ 
-        system("gcc fizzbuzz9.c -o b.exe; ./b.exe");
+        system("./b.exe");
 #elif _WIN32
-        system("gcc fizzbuzz9.c -o b.exe && b.exe");
+        system("b.exe");
 #endif
         remove("b.exe");
         remove("fizzbuzz9.c");
