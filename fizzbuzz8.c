@@ -1,5 +1,12 @@
 #include <stdio.h>
+
+#ifdef __linux__ 
+#include <stdlib.h>
+#elif _WIN32
 #include <Windows.h>
+#else
+#error "Target not supported!"
+#endif
 
 int main() 
 {
@@ -21,7 +28,12 @@ int main()
         }
         fprintf(f, "\treturn 0;\n}");
         fclose(f);
-        system("gcc fizzbuzz9.c -o b.exe && b.exe");
+
+#ifdef __linux__ 
+        system("gcc fizzbuzz9.c -o b.exe; ./b.exe");
+#elif _WIN32
+        system("gcc fizzbuzz9.c -o b.exe; b.exe");
+#endif
         remove("b.exe");
         remove("fizzbuzz9.c");
     }
